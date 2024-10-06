@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PergsyMoons</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Monospace, sans-serif;
+            color: white;
+            background-color: rgb(49, 49, 49);
+            overflow-x: hidden;
+        }
+
+        .title-section {
+            background: linear-gradient(to right, #000, #222);
+            animation: fadeIn 3s ease-out;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 9rem;
+            letter-spacing: 0.5rem;
+            text-transform: uppercase;
+            animation: zoomIn 3s ease-out;
+        }
+
+        .title .highlight {
+            color: rgb(56, 177, 180);
+        }
+
+        .title-line {
+            margin-top: 10px;
+            width: 800px;
+            height: 4px;
+            background-color: white;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            0% {
+                transform: scale(3);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .middle-section {
+            background-color: #111;
+            color: #ddd;
+            padding: 50px;
+            z-index: 1;
+        }
+
+        .planetary-section {
+            background-color: black;
+            z-index: 1;
+            height: 500px;
+            position: relative;
+        }
+
+        .slider-images img {
+            width: 100%;
+            height:auto;
+        }
+
+        .slider-controls {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .audio-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .audio-label {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        #image img {
+            width: 300px;
+            height: auto;
+            margin: 40px;
+        }
+
+        /* Clase para ajustar el tamaño de la imagen al final */
+        .small-image {
+            width: 190px;
+            height: auto;
+            margin: 20px auto;
+        }
+
+        /* Fondo estrellado */
+        .star-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            z-index: -1;
+            pointer-events: none;
+            animation: zoom 20s linear infinite;
+        }
+
+        @keyframes zoom {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Música - diseño minimalista debajo del carrusel */
+        .audio-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .audio-label {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        #teamMembers {
+            text-align: center;
+        }
+        .custom-text {
+            font-size: 1.5rem; /* Ajusta este valor para cambiar el tamaño del texto */
+            color: rgb(255, 255, 255); 
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <!-- Fondo estrellado -->
+    <div class="star-field"></div>
+
+    <!-- Primera sección: Título -->
+    <section class="title-section">
+        <div class="title">
+            Tune-<span class="highlight">X-Webb</span>
+        </div>
+        <div class="title-line"></div>
+        <div class="custom-text">
+            Connecting to the sounds of the universe!
+        </div>
+    </section>
+
+    <!-- Sección de texto -->
+    <section class="middle-section container">
+        <div>
+            <span style="color:rgb(56, 177, 180); font-size: 1.5rem; font-weight: bold;">James Webb: A stellar gateway to the past.</span><br />
+            <span style="font-size: 1.2rem; line-height: 1.8;">
+                This telescope was born out of human curiosity to understand where we come from, to know our past, and to comprehend the environment in which our planet exists. The images captured by this telescope are so far away from us that their measurement is done in light-years. A light-year is the distance that light travels in one Earth year.
+            </span>
+        </div>
+    </section>
+
+    <!-- Sección de animación 3D del James Webb -->
+    <section class="planetary-section">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+        <script>
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.querySelector('.planetary-section').appendChild(renderer.domElement);
+
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enableZoom = true;
+
+            camera.position.set(5, 70, 40); 
+            camera.lookAt(0, 0, 0);
+            camera.fov = 20;
+            camera.updateProjectionMatrix();
+
+            const points = [];
+            for (let i = 0; i <= 100; i++) {
+                const angle = (i / 100) * Math.PI * 2;
+                points.push(new THREE.Vector3(20 * Math.cos(angle), 10 * Math.sin(angle), 5 * Math.sin(2 * angle)));
+            }
+            const curve = new THREE.CatmullRomCurve3(points);
+            const orbitPath = new THREE.Line(
+                new THREE.BufferGeometry().setFromPoints(curve.getPoints(1000)),
+                new THREE.LineBasicMaterial({ color: 0xffffff })
+            );
+            scene.add(orbitPath);
+
+            // Cargar el modelo del Sol
+            const gltfLoader = new THREE.GLTFLoader();
+            gltfLoader.load('/jwst-james-webb-space-telescope/sun_animated_test.glb', function (gltf) {
+                const sun = gltf.scene;
+                sun.scale.set(8, 8, 8);
+                scene.add(sun);
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    sun.rotation.y += 0.007;
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+            });
+
+            // Cargar el modelo de la Tierra
+            gltfLoader.load('/jwst-james-webb-space-telescope/earth.glb', function (gltf) {
+                const earth = gltf.scene;
+                earth.scale.set(0.01, 0.01, 0.01);
+                earth.position.set(18, 0, 0);
+                scene.add(earth);
+
+                function animate() {
+                    requestAnimationFrame(animate);
+                    earth.rotation.y += 0.08;
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+            });
+
+            // Cargar el modelo del James Webb
+            const loader = new THREE.GLTFLoader();
+            loader.load('/jwst-james-webb-space-telescope/the_james_webb_space_telescope.glb', function (gltf) {
+                const webb = gltf.scene;
+                webb.scale.set(0.1, 0.1, 0.1);
+                scene.add(webb);
+
+                let angle = 0;
+                function animate() {
+                    requestAnimationFrame(animate);
+                    angle += 0.002;
+                    const position = curve.getPoint((angle % 1));
+                    webb.position.copy(position);
+                    controls.update();
+                    renderer.render(scene, camera);
+                }
+                animate();
+            });
+
+            scene.add(new THREE.AmbientLight(0xffffff, 4));
+            const starGeometry = new THREE.SphereGeometry(0.09, 8, 8);
+            const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            for (let i = 0; i < 500; i++) {
+                const star = new THREE.Mesh(starGeometry, starMaterial);
+                star.position.set((Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100);
+                scene.add(star);
+            }
+
+            camera.position.z = 50;
+        </script>
+    </section>
+
+    <!-- Sección del slider de imágenes -->
+    <section class="slider-section container">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/01_image.jpg" class="d-block w-100" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/02_image.jpg" class="d-block w-100" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/03_image.jpg" class="d-block w-100" alt="Image 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/04_image.jpg" class="d-block w-100" alt="Image 4">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/05_image.jpg" class="d-block w-100" alt="Image 5">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/06_image.jpg" class="d-block w-100" alt="Image 6">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/07_image.jpg" class="d-block w-100" alt="Image 7">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/08_image.jpg" class="d-block w-100" alt="Image 8">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/09_image.jpg" class="d-block w-100" alt="Image 9">
+                </div>
+                <div class="carousel-item">
+                    <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/10_image.jpg" class="d-block w-100" alt="Image 10">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- Reproductor de audio debajo del carrusel -->
+        <div class="audio-container">
+            <div class="audio-label">Become space and music:</div>
+            <audio id="music-player" controls>
+                <source src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/01.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </section>
+
+    <!-- Tercera sección: Equipo -->
+    <section class="title-section">
+        <div>Challenge: Symphony of the Stars: Harmonizing the James Webb<br />Space Telescope in Music and Images</div>
+        <div id="team">
+            <h1>Team: Pergsy Moons</h1>
+            <div id="teamMembers">
+                <p>Leo Texocotitla</p>
+                <p>Nadia Dueñas</p>
+                <p>Monica Milla</p>
+                <p>Andrés Daniel</p>
+                <p>Samuel Aguilar</p>
+            </div>
+        </div>
+
+        <!-- Imagen pequeña al final de la página -->
+        <div id="image">
+            <img src="/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/image/logo_NASA.png" alt="NASA Logo" class="small-image">
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Lista de canciones
+        const audioSources = [
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/01.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/02.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/03.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/04.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/05.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/06.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/07.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/08.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/09.mp3",
+            "/9607405-3fbf79a8c797aa3316b2b9e5587220799dc6b0a7/music/canciones/canciones/10.mp3"
+        ];
+
+        const audioPlayer = document.getElementById("music-player");
+
+        // Sincronizar el audio con la imagen del carrusel
+        document.getElementById("carouselExampleControls").addEventListener("slid.bs.carousel", function (event) {
+            const currentIndex = event.to;
+            audioPlayer.src = audioSources[currentIndex];  // Cambiar pista de audio según la imagen
+            audioPlayer.play();  // Reproducir la nueva pista automáticamente
+        });
+    </script>
+
+</body>
+
+</html>
